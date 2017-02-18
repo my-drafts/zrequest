@@ -3,7 +3,7 @@
 'use strict';
 
 /*
- * ZRequestWrapper{
+ * ZRequest{
  *  acceptTypes = [{mime: '*', q: 1, subtype: '', type: '*'}, ...],
  *  acceptCharsets = [{charset: '*', q: 1}, ...],
  * 	acceptEncodings = [{encoding: '*', q: 1}, ...],
