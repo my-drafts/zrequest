@@ -53,121 +53,121 @@ const re = [
 	/^[\/](.*?)[\/]?$/i
 ];
 
-class ZRequest{
-	get acceptTypes(){
-		if(this._acceptList === false){
+class ZRequest {
+	get acceptTypes() {
+		if (this._acceptList === false) {
 			this._acceptList = r2accept(this.request, '*');
 			Object.freeze(this._acceptList);
 		}
 		return this._acceptList;
 	}
 
-	get acceptCharsets(){
-		if(this._acceptCharsetList === false){
+	get acceptCharsets() {
+		if (this._acceptCharsetList === false) {
 			this._acceptCharsetList = r2acceptCharset(this.request, '*');
 			Object.freeze(this._acceptCharsetList);
 		}
 		return this._acceptCharsetList;
 	}
 
-	get acceptEncodings(){
-		if(this._acceptEncodingList === false){
+	get acceptEncodings() {
+		if (this._acceptEncodingList === false) {
 			this._acceptEncodingList = r2acceptEncoding(this.request, '*');
 			Object.freeze(this._acceptEncodingList);
 		}
 		return this._acceptEncodingList;
 	}
 
-	get acceptLanguages(){
-		if(this._acceptLanguageList === false){
+	get acceptLanguages() {
+		if (this._acceptLanguageList === false) {
 			this._acceptLanguageList = r2acceptLanguage(this.request, '*');
 			Object.freeze(this._acceptLanguageList);
 		}
 		return this._acceptLanguageList;
 	}
 
-	get contentTypes(){
-		if(this._contentTypeList === false){
+	get contentTypes() {
+		if (this._contentTypeList === false) {
 			this._contentTypeList = r2contentType(this.request, '-/-');
 			Object.freeze(this._contentTypeList);
 		}
 		return this._contentTypeList;
 	}
 
-	get cookies(){
-		if(this._cookieList === false){
+	get cookies() {
+		if (this._cookieList === false) {
 			this._cookieList = r2cookie(this.request, '');
 			Object.freeze(this._cookieList);
 		}
 		return this._cookieList;
 	}
 
-	get directory(){
-		if(this._directoryString === false){
+	get directory() {
+		if (this._directoryString === false) {
 			this._directoryString = this.path.replace(re[0], '$1');
 			Object.freeze(this._directoryString);
 		}
 		return this._directoryString;
 	}
 
-	get headers(){
-		if(this._headerList === false){
+	get headers() {
+		if (this._headerList === false) {
 			this._headerList = r2headers(this.request, {});
 			Object.freeze(this._headerList);
 		}
 		return this._headerList;
 	}
 
-	get host(){
-		if(this._hostString === false){
+	get host() {
+		if (this._hostString === false) {
 			this._hostString = r2host(this.request, '*');
 			Object.freeze(this._hostString);
 		}
 		return this._hostString;
 	}
 
-	get httpVersion(){
-		if(this._httpVersionString === false){
+	get httpVersion() {
+		if (this._httpVersionString === false) {
 			this._httpVersionString = r2httpVersion(this.request, '?');
 			Object.freeze(this._httpVersionString);
 		}
 		return this._httpVersionString;
 	}
 
-	get file(){
-		if(this._fileString === false){
+	get file() {
+		if (this._fileString === false) {
 			this._fileString = this.path.replace(re[0], '$2');
 			Object.freeze(this._fileString);
 		}
 		return this._fileString;
 	}
 
-	get method(){
-		if(this._methodString === false){
+	get method() {
+		if (this._methodString === false) {
 			this._methodString = r2method(this.request, '*');
 			Object.freeze(this._methodString);
 		}
 		return this._methodString;
 	}
 
-	get path(){
-		if(this._pathString === false){
+	get path() {
+		if (this._pathString === false) {
 			this._pathString = r2path(this.request, '/');
 			Object.freeze(this._pathString);
 		}
 		return this._pathString;
 	}
 
-	get paths(){
-		if(this._pathList === false){
+	get paths() {
+		if (this._pathList === false) {
 			this._pathList = this.path.replace(re[1], '$1').split('/');
 			Object.freeze(this._pathList);
 		}
 		return this._pathList;
 	}
 
-	get port(){
-		if(this._portNumber === false){
+	get port() {
+		if (this._portNumber === false) {
 			this._portNumber = r2port(this.request, 0);
 			Object.freeze(this._portNumber);
 		}
@@ -178,8 +178,8 @@ class ZRequest{
 		return this._request;
 	}
 
-	get query(){
-		if(this._queryList === false){
+	get query() {
+		if (this._queryList === false) {
 			this._queryList = r2query(this.request, {});
 			Object.freeze(this._queryList);
 		}
@@ -187,7 +187,7 @@ class ZRequest{
 	}
 
 	get statusCode() {
-		if(this._statusCodeNumber === false){
+		if (this._statusCodeNumber === false) {
 			this._statusCodeNumber = r2statusCode(this.request, 0);
 			Object.freeze(this._statusCodeNumber);
 		}
@@ -195,7 +195,7 @@ class ZRequest{
 	}
 
 	get statusMessage() {
-		if(this._statusMessageString === false){
+		if (this._statusMessageString === false) {
 			this._statusMessageString = r2statusMessage(this.request, '');
 			Object.freeze(this._statusMessageString);
 		}
@@ -203,15 +203,15 @@ class ZRequest{
 	}
 
 	get userAgent() {
-		if(this._userAgentObject === false){
+		if (this._userAgentObject === false) {
 			this._userAgentObject = r2userAgent(this.request, '');
 			Object.freeze(this._userAgentObject);
 		}
 		return this._userAgentObject;
 	}
 
-	constructor(request){
-		if(zt.as(request).has('IncomingMessage')){
+	constructor(request) {
+		if (zt.as(request).has('IncomingMessage')) {
 			this._acceptList = false;
 			this._acceptCharsetList = false;
 			this._acceptEncodingList = false;
@@ -234,7 +234,7 @@ class ZRequest{
 			this._userAgentObject = false;
 			Object.freeze(this);
 		}
-		else{
+		else {
 			throw 'wrong request';
 		}
 	}
