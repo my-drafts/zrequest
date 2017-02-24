@@ -29,6 +29,8 @@
  *
  * */
 
+const uf = require('util').format;
+const ui = require('util').inspect;
 const zt = require('ztype');
 
 const r2accept = require('./lib/request2accept');
@@ -232,11 +234,42 @@ class ZRequest {
 			this._statusCodeNumber = false;
 			this._statusMessageString = false;
 			this._userAgentObject = false;
-			Object.freeze(this);
+			Object.seal(this);
 		}
 		else {
 			throw 'wrong request';
 		}
+	}
+
+	toString() {
+		const state = {
+			accept: this.acceptTypes,
+			acceptCharsets: this.acceptCharsets,
+			acceptEncodings: this.acceptEncodings,
+			acceptLanguages: this.acceptLanguages,
+			contentTypes: this.contentTypes,
+			cookies: this.cookies,
+			directory: this.directory,
+			headers: this.headers,
+			host: this.host,
+			httpVersion: this.httpVersion,
+			file: this.file,
+			method: this.method,
+			path: this.path,
+			paths: this.paths,
+			port: this.port,
+			//request: this.request,
+			query: this.query,
+			statusCode: this.statusCode,
+			statusMessage: this.statusMessage,
+			userAgent: this.userAgent
+		}
+		return ui(state, {
+			breakLength: 80,
+			colors: false,
+			depth: 2,
+			showHidden: false
+		});
 	}
 }
 
