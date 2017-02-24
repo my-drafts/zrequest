@@ -234,7 +234,6 @@ class ZRequest {
 			this._statusCodeNumber = false;
 			this._statusMessageString = false;
 			this._userAgentObject = false;
-			Object.seal(this);
 		}
 		else {
 			throw 'wrong request';
