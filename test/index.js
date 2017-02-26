@@ -3,6 +3,8 @@
 'use strict';
 
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const ZRequest = require('../').ZRequest;
 const zt = require('ztype');
 
@@ -28,6 +30,22 @@ http.createServer(function (request, response) {
 	}
 	else {
 		req.init().then(function () {
+			return new Promise(function (resolve, reject) {
+				fs.readdir(path.normalize(__dirname + '/../tmp/upload'), function (error, files) {
+					if (error) {
+						reject(error);
+					}
+					else {
+						resolve(files);
+					}
+				});
+			});
+		}).then(function (files) {
+			files.forEach(function (file) {
+				console.log(file);
+			})
+			return Promise.resolve();
+		}).then(function () {
 			return req.uploadClean();
 		}).then(function () {
 			console.log(String(req));
@@ -39,4 +57,4 @@ http.createServer(function (request, response) {
 	}
 }).on('error', function (error) {
 	console.log(error);
-}).listen(8080);
+}).listen(8081);
