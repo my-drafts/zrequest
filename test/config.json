@@ -1,0 +1,23 @@
+{
+  "cookieInit": {
+    "amount": 100,
+  	"encoding": "utf8",
+  	"size": 8192
+  },
+  "postAndUploadFinal": {
+    "skip": ["^readme.txt", ""]
+  },
+  "postAndUploadInit": {
+    "amount": 100,
+  	"encoding": "utf8",
+  	"size": 2097152,
+    "directory": "tmp/upload",
+  	"space": "Infinity"
+  },
+  "postAndUploadInitMethods": [ "post", "put" ],
+  "queryInit": {
+    "amount": 100,
+  	"encoding": "utf8",
+  	"size": 8192
+  }
+}

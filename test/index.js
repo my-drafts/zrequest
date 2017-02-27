@@ -29,24 +29,19 @@ http.createServer(function (request, response) {
 		response.end(html);
 	}
 	else {
-		req.init().then(function () {
+		let options = {};
+		req.init(options).then(function () {
 			return new Promise(function (resolve, reject) {
-				fs.readdir(path.normalize(__dirname + '/../tmp/upload'), function (error, files) {
-					if (error) {
-						reject(error);
-					}
-					else {
-						resolve(files);
-					}
+				const uploadDirPath = path.normalize(__dirname + '/../tmp/upload');
+				fs.readdir(uploadDirPath, function (error, files) {
+					error ? reject(error) : resolve(files);
 				});
 			});
 		}).then(function (files) {
-			files.forEach(function (file) {
-				console.log(file);
-			})
+			console.log(files);
 			return Promise.resolve();
 		}).then(function () {
-			return req.uploadClean();
+			return req.final(options);
 		}).then(function () {
 			console.log(String(req));
 			response.end(String(req));
@@ -57,4 +52,4 @@ http.createServer(function (request, response) {
 	}
 }).on('error', function (error) {
 	console.log(error);
-}).listen(8081);
+}).listen(8082);
