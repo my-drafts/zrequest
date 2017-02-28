@@ -9,7 +9,7 @@ const uf = require('util').format;
 const ZRequest = require('../').ZRequest;
 const zt = require('ztype');
 
-const HTML = '<html><head>%s</head><body>%s</body></html>';
+const HTML = '<!DOCTYPE html><html><head>%s</head><body>%s</body></html>';
 
 http.createServer(function (request, response) {
 	let req = new ZRequest(request);
