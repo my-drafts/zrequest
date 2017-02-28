@@ -1,0 +1,17 @@
+{% extends "./index.html" %}
+<!-- -->
+{% block title %}
+<title>get</title>
+{% endblock title %}
+<!-- -->
+{% block body %}
+<form method="GET" action="/submit-simple/">
+  <input type="text" name="aa" value="" />
+  <input type="text" name="aa" value="" />
+  <input type="text" name="bb" value="" />
+  <input type="file" multiple="multiple" name="ff" value="" />
+  <input type="submit" value="submit" />
+  <input type="reset" value="reset" />
+</form>
+{% endblock body %}
+<!-- -->
