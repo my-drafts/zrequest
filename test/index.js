@@ -5,10 +5,29 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const uf = require('util').format;
 const swig = require('swig');
-const ZRequest = require('../').ZRequest;
+const uf = require('util').format;
 const zt = require('ztype');
+const ZRequest = require('../').ZRequest;
+
+const cpuUsed = function () {
+	return '?'; //process.cpuUsage();
+};
+
+const memUsed = module.exports.memUsed = function () {
+	var units = ['', 'kb', 'mb', 'gb'],
+		unit, mem = process.memoryUsage();
+	var total = mem.heapTotal;
+	for (unit = 0; total > 1024 && unit < units.length; unit++) {
+		total /= 1024;
+	}
+	var result = {
+		size: total.toFixed(3),
+		unit: units[unit],
+		total: mem.heapTotal
+	};
+	return result;
+};
 
 const tpl = new swig.Swig({
 	cache: false,
@@ -19,9 +38,12 @@ const tpl = new swig.Swig({
 });
 
 http.createServer(function (request, response) {
+		console.log(1, memUsed(), cpuUsed());
 		let req = new ZRequest(request);
+		console.log(2, memUsed(), cpuUsed());
 		req.load({})
 			.then(function () {
+				console.log(3, memUsed(), cpuUsed());
 				//console.log(String(req));
 				//console.log('---');
 				switch (req.method) {
@@ -103,13 +125,19 @@ http.createServer(function (request, response) {
 					default:
 						response.end(String(req));
 				}
+				console.log(6, memUsed(), cpuUsed());
 			})
 			.catch(function (error) {
+				console.log(7, memUsed(), cpuUsed());
 				response.end(String(error));
 			});
+		console.log(8, memUsed(), cpuUsed());
 	})
 	.on('error', function (error) {
+		console.log(9, memUsed(), cpuUsed());
 		console.log(String(error));
 		console.log('---');
 	})
 	.listen(8080);
+
+console.log(0, memUsed(), cpuUsed());
