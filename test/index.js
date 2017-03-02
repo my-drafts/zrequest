@@ -11,86 +11,105 @@ const ZRequest = require('../').ZRequest;
 const zt = require('ztype');
 
 const tpl = new swig.Swig({
-  cache: false,
-  locals: {},
-  loader: swig.loaders.fs('./test/storage', {
-    encoding: 'utf8'
-  })
+	cache: false,
+	locals: {},
+	loader: swig.loaders.fs('./test/storage', {
+		encoding: 'utf8'
+	})
 });
 
 http.createServer(function (request, response) {
-  let req = new ZRequest(request);
-  console.log('===');
-  console.log(String(req));
-  console.log('---');
-  if (req.path === '/') {
-    const filePath = 'front-page/index.html';
-    tpl.renderFile(filePath, {}, function (error, html) {
-      response.end(error ? String(error) : html);
-    });
-  }
-  else if (req.path === '/post-multipart-form-data/') {
-    const filePath = 'post/multipart-form-data.html';
-    tpl.renderFile(filePath, {}, function (error, html) {
-      response.end(error ? String(error) : html);
-    });
-  }
-  else if (req.path === '/post-application-json/') {
-    const filePath = 'post/application-json.html';
-    tpl.renderFile(filePath, {}, function (error, html) {
-      response.end(error ? String(error) : html);
-    });
-  }
-  else if (req.path === '/post-application-x-www-form-urlencoded/') {
-    const filePath = 'post/application-x-www-form-urlencoded.html';
-    tpl.renderFile(filePath, {}, function (error, html) {
-      response.end(error ? String(error) : html);
-    });
-  }
-  else if (req.path === '/post-text-plain/') {
-    const filePath = 'post/text-plain.html';
-    tpl.renderFile(filePath, {}, function (error, html) {
-      response.end(error ? String(error) : html);
-    });
-  }
-  else if (req.path === '/post/') {
-    const filePath = 'post/index.html';
-    tpl.renderFile(filePath, {}, function (error, html) {
-      response.end(error ? String(error) : html);
-    });
-  }
-  else if (req.path === '/get/') {
-    const filePath = 'get/index.html';
-    tpl.renderFile(filePath, {}, function (error, html) {
-      response.end(error ? String(error) : html);
-    });
-  }
-  else if (req.path === '/submit-simple/') {
-    response.end(String(req));
-  }
-  else if (req.path === '/submit-complex/') {
-    const options = require('./config');
-    req.init(options).then(function () {
-      return new Promise(function (resolve, reject) {
-        const uploadDirPath = __dirname.replace(/[^\/]+$/, '') + options.postAndUploadInit.directory;
-        fs.readdir(uploadDirPath, function (error, files) {
-          error ? reject(error) : resolve(files);
-        });
-      });
-    }).then(function (files) {
-      console.log(files);
-      return req.final(options);
-    }).then(function () {
-      response.end(String(req));
-    }).catch(function (error) {
-      console.log(error);
-      response.end(String(error));
-    });
-  }
-  else {
-    response.end(String(req));
-  }
-}).on('error', function (error) {
-  console.log(error);
-  console.log('---');
-}).listen(8080);
+		let req = new ZRequest(request);
+		req.load({})
+			.then(function () {
+				//console.log(String(req));
+				//console.log('---');
+				switch (req.method) {
+					case 'get':
+						switch (req.path) {
+							case '/':
+								let f1 = 'front-page/index.html';
+								tpl.renderFile(f1, {}, function (error, html) {
+									response.end(error ? String(error) : html);
+								});
+								break;
+							case '/post-multipart-form-data/':
+								let f2 = 'post/multipart-form-data.html';
+								tpl.renderFile(f2, {}, function (error, html) {
+									response.end(error ? String(error) : html);
+								});
+								break;
+							case '/post-application-json/':
+								let f3 = 'post/application-json.html';
+								tpl.renderFile(f3, {}, function (error, html) {
+									response.end(error ? String(error) : html);
+								});
+								break;
+							case '/post-application-x-www-form-urlencoded/':
+								let f4 = 'post/application-x-www-form-urlencoded.html';
+								tpl.renderFile(f4, {}, function (error, html) {
+									response.end(error ? String(error) : html);
+								});
+								break;
+							case '/post-text-plain/':
+								let f5 = 'post/text-plain.html';
+								tpl.renderFile(f5, {}, function (error, html) {
+									response.end(error ? String(error) : html);
+								});
+								break;
+							case '/post/':
+								let f6 = 'post/index.html';
+								tpl.renderFile(f6, {}, function (error, html) {
+									response.end(error ? String(error) : html);
+								});
+								break;
+							case '/get/':
+								let f7 = 'get/index.html';
+								tpl.renderFile(f7, {}, function (error, html) {
+									response.end(error ? String(error) : html);
+								});
+								break;
+							default:
+								response.end(String(req));
+						}
+						break;
+					case 'post':
+						switch (req.path) {
+							case '/submit-simple/':
+								response.end(String(req));
+								break;
+							case '/submit-complex/':
+								req.final({})
+									.then(function () {
+										response.end(String(req));
+									})
+									.catch(function (error) {
+										response.end(String(error));
+									});
+								break;
+							case '/submit-json/':
+								req.final({})
+									.then(function () {
+										response.end(String(req));
+									})
+									.catch(function (error) {
+										response.end(String(error));
+									});
+								break;
+							default:
+								response.end(String(req));
+						}
+						break;
+					default:
+						response.end(String(req));
+				}
+			})
+			.catch(function (error) {
+				response.end(String(error));
+			});
+	})
+	.on('error', function (error) {
+		console.log(String(error));
+		console.log('---');
+	})
+	.listen(8080);

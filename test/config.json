@@ -1,20 +1,24 @@
 {
-  "cookie": {
-    "amount": 100,
-  	"encoding": "utf8",
-  	"size": 8192
-  },
-  "post": {
-    "methods": [ "post", "put" ],
-    "amount": 100,
-  	"encoding": "utf8",
-  	"size": 2097152,
-    "directory": "tmp/upload",
-  	"space": "Infinity"
-  },
-  "query": {
-    "amount": 100,
-  	"encoding": "utf8",
-  	"size": 8192
-  }
+  "cookiesAmount": 100,
+  "cookiesEnable": true,
+  "cookiesEncoding": "utf8",
+  "cookiesSize": 8192,
+  "cookiesSkipEmpty": true,
+
+  "postMethods": [ "post", "put" ],
+  "postsAmount": 100,
+  "postsEnable": true,
+  "postsEncoding": "utf8",
+  "postsSize": 2097152,
+  "postsSkipEmpty": true,
+
+  "queriesAmount": 100,
+  "queriesEnable": true,
+  "queriesEncoding": "utf8",
+  "queriesSize": 8192,
+  "queriesSkipEmpty": true,
+
+  "uploadsDirectory": "tmp/upload",
+  "uploadsSkipEmpty": true,
+  "uploadsSpace": "Infinity"
 }
