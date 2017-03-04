@@ -6,6 +6,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const swig = require('swig');
+const process = require('process');
 const uf = require('util').format;
 const usage = require('usage');
 const zt = require('ztype');
@@ -14,7 +15,7 @@ const ZRequest = require('../').ZRequest;
 const tpl = new swig.Swig({
 	cache: false,
 	locals: {},
-	loader: swig.loaders.fs('./test/storage', {
+	loader: swig.loaders.fs(path.join(process.cwd(), 'test/storage'), {
 		encoding: 'utf8'
 	})
 });
@@ -25,8 +26,8 @@ http.createServer(function (request, response) {
 		}, function (error, used) {
 			console.log(error ? error : used);
 		});
-		
-		let req = new ZRequest(request);
+
+		let req = new ZRequest(request, require('./config.json'));
 		req.load({})
 			.then(function () {
 				//console.log(String(req));
@@ -91,7 +92,7 @@ http.createServer(function (request, response) {
 										response.end(String(req));
 									})
 									.catch(function (error) {
-										response.end(String(error));
+										response.end(String(error) + '\n1\n' + String(error.stack));
 									});
 								break;
 							case '/submit-json/':
@@ -100,7 +101,7 @@ http.createServer(function (request, response) {
 										response.end(String(req));
 									})
 									.catch(function (error) {
-										response.end(String(error));
+										response.end(String(error) + '\n2\n' + String(error.stack));
 									});
 								break;
 							default:
@@ -112,11 +113,11 @@ http.createServer(function (request, response) {
 				}
 			})
 			.catch(function (error) {
-				response.end(String(error));
+				response.end(String(error) + '\n3\n' + String(error.stack));
 			});
 	})
 	.on('error', function (error) {
-		console.log(String(error));
+		console.log(String(error) + '\n4\n' + String(error.stack));
 		console.log('---');
 	})
 	.listen(8080);
