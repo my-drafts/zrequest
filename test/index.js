@@ -3,19 +3,18 @@
 'use strict';
 
 const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const swig = require('swig');
 const process = require('process');
+const swig = require('swig');
 const uf = require('util').format;
 const usage = require('usage');
+const zfs = require('zfilesystem');
 const zt = require('ztype');
 const ZRequest = require('../').ZRequest;
 
 const tpl = new swig.Swig({
 	cache: false,
 	locals: {},
-	loader: swig.loaders.fs(path.join(process.cwd(), 'test/storage'), {
+	loader: swig.loaders.fs(zfs.path('test/storage'), {
 		encoding: 'utf8'
 	})
 });
@@ -87,6 +86,7 @@ http.createServer(function (request, response) {
 								response.end(String(req));
 								break;
 							case '/submit-complex/':
+							console.log(String(req));
 								req.final({})
 									.then(function () {
 										response.end(String(req));
