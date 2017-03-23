@@ -19,6 +19,8 @@ const tpl = new swig.Swig({
 	})
 });
 
+const port = 8080;
+
 http.createServer(function (request, response) {
 		usage.lookup(process.pid, {
 			keepHistory: false
@@ -76,6 +78,13 @@ http.createServer(function (request, response) {
 									response.end(error ? String(error) : html);
 								});
 								break;
+							case '/close/':
+								response.end('close');
+								setImmediate(function () {
+									console.log(uf('Server stoped.'));
+									process.exit(0);
+								})
+								break;
 							default:
 								response.end(String(req));
 						}
@@ -120,4 +129,6 @@ http.createServer(function (request, response) {
 		console.log(String(error) + '\n4\n' + String(error.stack));
 		console.log('---');
 	})
-	.listen(8080);
+	.listen(port);
+
+console.log(uf('Server started at %s port.', port));
