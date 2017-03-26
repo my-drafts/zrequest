@@ -1,6 +1,6 @@
 {
   "name": "zrequest",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -35,7 +35,6 @@
     "swig": "^1.4.2",
     "usage": "^0.7.1",
     "util": "^0.10.3",
-    "zfilesystem": "latest",
     "ztype": "latest"
   }
 }

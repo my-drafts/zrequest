@@ -7,14 +7,13 @@ const process = require('process');
 const swig = require('swig');
 const uf = require('util').format;
 const usage = require('usage');
-const zfs = require('zfilesystem');
 const zt = require('ztype');
 const ZRequest = require('../').ZRequest;
 
 const tpl = new swig.Swig({
 	cache: false,
 	locals: {},
-	loader: swig.loaders.fs(zfs.path('test/storage'), {
+	loader: swig.loaders.fs('test/storage', {
 		encoding: 'utf8'
 	})
 });
