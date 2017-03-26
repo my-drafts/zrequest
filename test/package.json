@@ -1,0 +1,19 @@
+{
+  "name": "test",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Sergyi Kukharyev",
+  "license": "ISC",
+  "dependencies": {
+    "http": "0.0.0",
+    "process": "^0.11.9",
+    "swig": "^1.4.2",
+    "usage": "^0.7.1",
+    "util": "^0.10.3",
+    "ztype": "^2.3.0"
+  }
+}
