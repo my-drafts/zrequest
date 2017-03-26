@@ -13,7 +13,7 @@ const ZRequest = require('../').ZRequest;
 const tpl = new swig.Swig({
 	cache: false,
 	locals: {},
-	loader: swig.loaders.fs('test/storage', {
+	loader: swig.loaders.fs('storage', {
 		encoding: 'utf8'
 	})
 });
